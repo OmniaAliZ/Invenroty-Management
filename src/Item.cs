@@ -2,7 +2,7 @@ class Item
 {
     private readonly string _name;
     private int _quantity { get; set; }
-    private DateTime _date { get; } // yazan name: _createdAt
+    private DateTime _date { get; } //? _createdAt OR _createdDate
     // public Item(string name, int quantity)
     // {
     //     _name = name;
@@ -41,6 +41,6 @@ class Item
     }
     public override string? ToString()
     {
-        return $"Name of Item {_name} quantity: {_quantity} and date {_date}";
+        return $"Item name:  {_name}\nQuantity:  {_quantity}\nCreated date:  \n{_date}\n";
     }
 }

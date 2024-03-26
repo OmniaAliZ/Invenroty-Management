@@ -11,7 +11,7 @@ class Store<T> where T : Item
     public Store(int capacity)
     {
         _capacity = capacity;
-        _items = new List<T>();//yazan : _items=[];
+        _items = new List<T>();//_items=[];
     }
     public List<T> GetItems()
     {
@@ -45,7 +45,7 @@ class Store<T> where T : Item
             if (!_items.Any(item => item.GetName() == newItem.GetName()))// if(!_items.Contains(newItem)){ } //* other way?
             {
                 _items.Add(newItem);
-                Console.WriteLine($"Added: {newItem}");
+                Console.WriteLine($"Added:\n {newItem}");
             }
             else
             {
@@ -53,8 +53,6 @@ class Store<T> where T : Item
             }
         }
     }
-    //   public List<T> SortByDate(SortOrder sort)
-    // if SortOrder.ASC => orderBy 
     public List<T> SortByDate(SortOrder sort) //!CHECK
     {
         if (sort is SortOrder.DESC)
@@ -74,7 +72,6 @@ class Store<T> where T : Item
     }
     public void GroupByDate()
     {
-        // compute total days by current date - item.GetCreatedDate() >= 90 ? "New Arrival" : "Old Item" 
         var groupByMonth = (from item in _items
                             let currentDate = DateTime.Now
                             let category = (currentDate - item.GetDate()).TotalDays <= 90 ? "New Arrival" : "Old"
@@ -83,10 +80,10 @@ class Store<T> where T : Item
                             select newGroup);
         foreach (var monthGroup in groupByMonth)
         {
-            Console.WriteLine($"{monthGroup.Key} : ");
+            Console.WriteLine($"{monthGroup.Key} ( {monthGroup.Count()} ) : ");
             foreach (var item in monthGroup)
             {
-                Console.WriteLine($"\t{item}");
+                Console.WriteLine($" - {item.GetName()},\n Created: {item.GetDate()}");
             }
         }
     }
@@ -122,7 +119,6 @@ class Store<T> where T : Item
     public List<T> SortByNameAsc()
     {
         return _items.OrderBy(item => item.GetName()).ToList();
-
     }
 }
 
