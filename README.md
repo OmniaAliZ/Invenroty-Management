@@ -6,7 +6,7 @@ In this assignment, you will create a simple inventory management system which a
 
 ## Level 1 - Mandatory
 
-DONE//1. Create class `Item`, which has name (readonly), quantity, and created date, which are private. Amount of each item cannot be negative. Provide the following features: 
+DONE//1. Create class `Item`, which has name (readonly), quantity, and created date, which are private. Amount of each item cannot be negative. Provide the following features:
 
 DONE//- Contructor to take parameters of name, quantity, and created date (optional, if not set, it will be current date).
 
@@ -49,48 +49,50 @@ DONE//- Modify the add method to not overload the capacity
 Class `Store` should have extra features
 
 DONE//- Method `SortByDate` to get the sorted collection by date dynamically (asc or desc)
-  ```
-   // method invocation example - You do not need to follow exactly the same
-  var store = new Store(300)
-  // ... add all items to the store
-  var collectionSortedByDate = store.SortByDate(SortOrder.DESC)
-  // print all items
-  ...
-  ```
-- Method `GroupByDate` to return 2 groups `New Arrival` and `Old` items. `New Arrival` items are those created within the last three months. For example, if the current month is October, then items created in August, September, and October are categorized as `New Arrival`. Items created before August are categorized as `Old`.
 
-  ```
-  // method invocation example - You do not need to follow exactly the same
-  var store = new Store(300)
-  // ... add all items to the store
-  var groupByDate = store.GroupByDate();
-  foreach (var group in groupByDate) {
-      Console.WriteLine($"{group.Key} Items:");
-      foreach (var item in group.Value) {
-          Console.WriteLine($" - {item.Name}, Created: {item.CreatedDate.ToShortDateString()}");
-      }
-  }
+```
+ // method invocation example - You do not need to follow exactly the same
+var store = new Store(300)
+// ... add all items to the store
+var collectionSortedByDate = store.SortByDate(SortOrder.DESC)
+// print all items
+...
+```
 
-  //Expected outcome
-  New Arrival Items:
-   - Coffee, Created: [current date]
-   - Sandwich, Created: [current date]
-   - Batteries, Created: [current date]
-   - Umbrella, Created: [current date]
-   - Sunscreen, Created: [current date]
+DONE//- Method `GroupByDate` to return 2 groups `New Arrival` and `Old` items. `New Arrival` items are those created within the last three months. For example, if the current month is October, then items created in August, September, and October are categorized as `New Arrival`. Items created before August are categorized as `Old`.
 
-  Old Items:
-   - Water Bottle, Created: 01/01/2023
-   - Chocolate Bar, Created: 02/01/2023
-   - Notebook, Created: 03/01/2023
-   - Pen, Created: 04/01/2023
-   - Tissue Pack, Created: 05/01/2023
-   - Chips Bag, Created: 06/01/2023
-   - Soda Can, Created: 07/01/2023
-   - Soap, Created: 08/01/2023
-   - Shampoo, Created: 09/01/2023
-   - Toothbrush, Created: 10/01/2023
-  ```
+```
+// method invocation example - You do not need to follow exactly the same
+var store = new Store(300)
+// ... add all items to the store
+var groupByDate = store.GroupByDate();
+foreach (var group in groupByDate) {
+    Console.WriteLine($"{group.Key} Items:");
+    foreach (var item in group.Value) {
+        Console.WriteLine($" - {item.Name}, Created: {item.CreatedDate.ToShortDateString()}");
+    }
+}
+
+//Expected outcome
+New Arrival Items:
+ - Coffee, Created: [current date]
+ - Sandwich, Created: [current date]
+ - Batteries, Created: [current date]
+ - Umbrella, Created: [current date]
+ - Sunscreen, Created: [current date]
+
+Old Items:
+ - Water Bottle, Created: 01/01/2023
+ - Chocolate Bar, Created: 02/01/2023
+ - Notebook, Created: 03/01/2023
+ - Pen, Created: 04/01/2023
+ - Tissue Pack, Created: 05/01/2023
+ - Chips Bag, Created: 06/01/2023
+ - Soda Can, Created: 07/01/2023
+ - Soap, Created: 08/01/2023
+ - Shampoo, Created: 09/01/2023
+ - Toothbrush, Created: 10/01/2023
+```
 
 ## Deadline
 

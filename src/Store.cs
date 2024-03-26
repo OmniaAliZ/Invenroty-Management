@@ -1,9 +1,8 @@
-// first, create an interface : base 
-// from this, we create other classes that implements from base interface
-// when using generics containts, we will apply this interface
-
-using Microsoft.VisualBasic;
-
+enum SortOrder
+{
+    ASC,
+    DESC
+}
 class Store<T> where T : Item
 {
     private List<T> _items;
@@ -37,7 +36,7 @@ class Store<T> where T : Item
     }
     public void AddItem(T newItem)
     {
-        if (GetCurrentVolume() + newItem.GetQuantity() >= _capacity)//!CHECK
+        if (GetCurrentVolume() + newItem.GetQuantity() >= _capacity)
         {
             Console.WriteLine("You reached the limit!.");
         }
@@ -54,10 +53,11 @@ class Store<T> where T : Item
             }
         }
     }
-
-    public List<T> SortByDate(string way) //!CHECK
+    //   public List<T> SortByDate(SortOrder sort)
+    // if SortOrder.ASC => orderBy 
+    public List<T> SortByDate(SortOrder sort) //!CHECK
     {
-        if (way.Equals("desc", StringComparison.CurrentCultureIgnoreCase))
+        if (sort is SortOrder.DESC)
         {
             var descSort = from item in _items
                            orderby item.GetDate() descending
@@ -69,18 +69,21 @@ class Store<T> where T : Item
             var ascSort = from item in _items
                           orderby item.GetDate()
                           select item;
-            return ascSort.ToList();
+            return [.. ascSort];
         }
     }
     public void GroupByDate()
     {
-        var groupByMonth = from item in _items
-                           group item by item.GetDate().Month into newGroup
-                           orderby newGroup.Key
-                           select newGroup;
+        // compute total days by current date - item.GetCreatedDate() >= 90 ? "New Arrival" : "Old Item" 
+        var groupByMonth = (from item in _items
+                            let currentDate = DateTime.Now
+                            let category = (currentDate - item.GetDate()).TotalDays <= 90 ? "New Arrival" : "Old"
+                            group item by category into newGroup
+                            orderby newGroup.Key
+                            select newGroup);
         foreach (var monthGroup in groupByMonth)
         {
-            Console.WriteLine($"Key: {monthGroup.Key}");
+            Console.WriteLine($"{monthGroup.Key} : ");
             foreach (var item in monthGroup)
             {
                 Console.WriteLine($"\t{item}");

@@ -1,4 +1,11 @@
-public class Base {
+// first, create an interface : base 
+// from this, we create other classes that implements from base interface
+// when using generics containts, we will apply this interface
+
+//!! Not finished nor used yet
+
+public class Base
+{
     private readonly string _name;
     private int _quantity;
     private DateTime _date { get; }
@@ -14,10 +21,12 @@ public class Base {
     {
         return _name;
     }
-    public void SetQuantity(int quantity){
+    public void SetQuantity(int quantity)
+    {
         _quantity = quantity;
     }
-    public int GetQuantity(){
+    public int GetQuantity()
+    {
         return _quantity;
     }
 }
