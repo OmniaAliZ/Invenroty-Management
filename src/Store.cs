@@ -120,6 +120,15 @@ class Store<T> where T : Item
     {
         return _items.OrderBy(item => item.GetName()).ToList();
     }
+
+    public List<T> SortByName(SortOrder sort)
+    {
+        if (sort is SortOrder.DESC)
+        {
+            return _items.OrderByDescending(item => item.GetName()).ToList();
+        }
+        else return _items.OrderBy(item => item.GetName()).ToList();
+    }
 }
 
 
