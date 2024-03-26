@@ -6,17 +6,17 @@ In this assignment, you will create a simple inventory management system which a
 
 ## Level 1 - Mandatory
 
-1. Create class `Item`, which has name (readonly), quantity, and created date, which are private. Amount of each item cannot be negative. Provide the following features:
+DONE//1. Create class `Item`, which has name (readonly), quantity, and created date, which are private. Amount of each item cannot be negative. Provide the following features: 
 
-- Contructor to take parameters of name, quantity, and created date (optional, if not set, it will be current date).
+DONE//- Contructor to take parameters of name, quantity, and created date (optional, if not set, it will be current date).
 
-2. Create class `Store` with the following properties and methods:
+DONE//2. Create class `Store` with the following properties and methods:
 
-- A collection to store items, which is private. Initially, this will be an empty collection.
-- Methods to add/delete one item to the collection. Do not allow to add items with same name to the store
-- Method `GetCurrentVolume` to compute the total amount of items in the store
-- Method `FindItemByName` to find an item by name.
-- Method `SortByNameAsc`to get the sorted collection by name in ascending order.
+DONE//- A collection to store items, which is private. Initially, this will be an empty collection.
+DONE//- Methods to add/delete one item to the collection. Do not allow to add items with same name to the store
+DONE//- Method `GetCurrentVolume` to compute the total amount of items in the store
+DONE//- Method `FindItemByName` to find an item by name.
+DONE//- Method `SortByNameAsc`to get the sorted collection by name in ascending order.
 
 ```
 // items example - You do not need to follow exactly the same
@@ -41,14 +41,14 @@ var sunscreen = new Item("Sunscreen", 8);
 
 Class `Store` should have the following features:
 
-- Maximum capacity , which is total amount of items allowed in the store, and contructor should also take an integer value as the maximum capacity of the inventory.
-- Modify the add method to not overload the capacity
+DONE//- Maximum capacity , which is total amount of items allowed in the store, and contructor should also take an integer value as the maximum capacity of the inventory.
+DONE//- Modify the add method to not overload the capacity
 
 ## Level 3 - Extra feature: Complex functionalities
 
 Class `Store` should have extra features
 
-- Method `SortByDate` to get the sorted collection by date dynamically (asc or desc)
+DONE//- Method `SortByDate` to get the sorted collection by date dynamically (asc or desc)
   ```
    // method invocation example - You do not need to follow exactly the same
   var store = new Store(300)

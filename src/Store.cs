@@ -1,54 +1,125 @@
-class Store 
+// first, create an interface : base 
+// from this, we create other classes that implements from base interface
+// when using generics containts, we will apply this interface
+
+using Microsoft.VisualBasic;
+
+class Store<T> where T : Item
 {
-    private List<Item> _items;
+    private List<T> _items;
+    private int _capacity;
     //CAN ADD NAME.
-    public Store()
+    public Store(int capacity)
     {
-        _items = new List<Item>();//yazan : _items=[];
+        _capacity = capacity;
+        _items = new List<T>();//yazan : _items=[];
     }
-    public List<Item> GetItems()
+    public List<T> GetItems()
     {
         return _items;
-        // store.GetItems.Count???
     }
-    public void AddItem(Item newItem)
+    public void Display(List<T>? listItems = null)
     {
-        // check whether new item (that you wanna add to _items, has the same name of the item in the array or not )
-        // you can use Any() or Find() to check the name 
-        if (!_items.Any(item => item.GetName() == newItem.GetName()))
+        if (listItems is null)
         {
-            _items.Add(newItem);
-            Console.WriteLine($"Added: {newItem}");
+            foreach (var item in _items)
+            {
+                Console.WriteLine('\n' + item.ToString() + '\n');
+            }
         }
         else
         {
-            Console.WriteLine($"You already have {newItem.GetName()}");
+            foreach (var item in listItems)
+            {
+                Console.WriteLine('\n' + item.ToString() + '\n');
+            }
         }
     }
-    public void Delete(Item item)
+    public void AddItem(T newItem)
     {
+        if (GetCurrentVolume() + newItem.GetQuantity() >= _capacity)//!CHECK
+        {
+            Console.WriteLine("You reached the limit!.");
+        }
+        else
+        {
+            if (!_items.Any(item => item.GetName() == newItem.GetName()))// if(!_items.Contains(newItem)){ } //* other way?
+            {
+                _items.Add(newItem);
+                Console.WriteLine($"Added: {newItem}");
+            }
+            else
+            {
+                Console.WriteLine($"You already have {newItem.GetName()}");
+            }
+        }
+    }
 
-        _items.Remove(item);
+    public List<T> SortByDate(string way) //!CHECK
+    {
+        if (way.Equals("desc", StringComparison.CurrentCultureIgnoreCase))
+        {
+            var descSort = from item in _items
+                           orderby item.GetDate() descending
+                           select item;
+            return descSort.ToList();
+        }
+        else
+        {
+            var ascSort = from item in _items
+                          orderby item.GetDate()
+                          select item;
+            return ascSort.ToList();
+        }
+    }
+    public void GroupByDate()
+    {
+        var groupByMonth = from item in _items
+                           group item by item.GetDate().Month into newGroup
+                           orderby newGroup.Key
+                           select newGroup;
+        foreach (var monthGroup in groupByMonth)
+        {
+            Console.WriteLine($"Key: {monthGroup.Key}");
+            foreach (var item in monthGroup)
+            {
+                Console.WriteLine($"\t{item}");
+            }
+        }
+    }
+    public void Delete(T deletedItem)
+    {
+        T? deleted = _items.Find(item => item.GetName() == deletedItem.GetName());
+        if (deleted is not null)
+        {
+            _items.Remove(deletedItem);
+            Console.WriteLine($"{deletedItem.GetName()} is removed");
+        }
+        else
+        {
+            Console.WriteLine($"{deletedItem.GetName()} is not found");
+        }
     }
     public int GetCurrentVolume()
     {
-        // in C#, you can use method Sum() 
-        int length = 0;
-        _items.ForEach(Item =>
+        return _items.Sum(item => item.GetQuantity());
+    }
+    public void FindItemByName(string itemName)
+    {
+        T? found = _items.Find(item => item.GetName() == itemName);
+        if (found is not null)
         {
-            length += 1;
-        });
-        return length;
+            Console.WriteLine($"{found}");
+        }
+        else
+        {
+            Console.WriteLine($"{itemName} Not Found");
+        }
     }
-    public Item? FindItemByName(string itemName)
+    public List<T> SortByNameAsc()
     {
-        // find() will find the first item of the array, if the item is found, stop
-        // 
-        return _items.Find(item => item.GetName() == itemName);
-    }
-    public List<Item> SortByNameAsc()
-    {
-        return _items;
+        return _items.OrderBy(item => item.GetName()).ToList();
+
     }
 }
 

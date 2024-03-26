@@ -7,14 +7,36 @@
             var waterBottle = new Item("Water Bottle", 10, new DateTime(2023, 1, 1));
             Console.WriteLine($"waterBottle {waterBottle}");
 
-
+            var apple = new Item("Apple", 10, default);
+            Console.WriteLine($"waterBottle {apple}");
+            var mango = new Item("Mango", 10, new DateTime(2025, 2, 5));
+            var laptop = new Item("Lap Top", 10, new DateTime(2020, 2, 5));
             // var laptop = new Item("Laptop", -50, new DateTime(2023, 1, 1));
             // Console.WriteLine($"waterBottle {laptop}");
 
-            Store store = new();
+            Store<Item> store = new(5);
             Console.WriteLine(store.GetItems().Count);
             store.AddItem(waterBottle);
+            store.AddItem(waterBottle);
+            store.AddItem(apple);
+            store.AddItem(mango);
+            store.AddItem(laptop);
             Console.WriteLine(store.GetItems().Count);
+            List<Item> s = store.SortByNameAsc();
+            store.Display(s);
+            Console.WriteLine("++++++++++++++");
+            List<Item> d = store.SortByDate("desc");
+            store.Display(d);
+            Console.WriteLine("++++++++++++++++");
+            Console.WriteLine("GROUP DATE");
+            store.GroupByDate();
+            Console.WriteLine("++++++++++++++++");
+            Console.WriteLine("count: " + store.GetCurrentVolume());
+            store.FindItemByName("Water Bottle");
+            store.FindItemByName("Apple");
+            store.Display();
+            store.Delete(apple);
+            store.Display();
             // var chocolateBar = new Item("Chocolate Bar", 15, new DateTime(2023, 2, 1));
             // var notebook = new Item("Notebook", 5, new DateTime(2023, 3, 1));
             // var pen = new Item("Pen", 20, new DateTime(2023, 4, 1));
