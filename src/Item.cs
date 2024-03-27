@@ -1,5 +1,7 @@
 class Item
 {
+    private int _id;
+    private static int _counter = 0;
     private readonly string _name;
     private int _quantity { get; set; }
     private DateTime _date { get; } //? _createdAt OR _createdDate
@@ -20,7 +22,8 @@ class Item
         if (quantity < 0) throw new ArgumentException("Quantity should be greater than 0! ");
         _name = name;
         _quantity = quantity;
-        _date = dateTime == default ? DateTime.Now : dateTime;
+        _id = Interlocked.Increment(ref _counter);
+        _date = dateTime == default ? DateTime.Now : dateTime;// _date = dateTime is null ? DateTime.Now : (DateTime)dateTime; >>Arg:(..,..,DateTime? dateTime = null)
     }
     public DateTime GetDate()
     {
@@ -41,6 +44,6 @@ class Item
     }
     public override string? ToString()
     {
-        return $"Item name:  {_name}\nQuantity:  {_quantity}\nCreated date:  \n{_date}\n";
+        return $"Item ({_id}) \nName:  {_name}\nQuantity:  {_quantity}\nCreated date:  \n{_date}\n";
     }
 }

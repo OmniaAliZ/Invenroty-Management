@@ -20,7 +20,7 @@
             var umbrella = new Item("Umbrella", 5);
             var sunscreen = new Item("Sunscreen", 8);
 
-            var store = new Store<Item>(300);
+            var store = new Store<Item>("Wish", 300);
 
             Console.WriteLine("++++++++++++++++");
             store.AddItem(waterBottle);
@@ -47,14 +47,22 @@
             store.GroupByDate();
             Console.WriteLine("++++++++++++++++");
 
+            // store.Display(store.SortByDate(SortOrder.DESC));
+            // Console.WriteLine("++++++++++++++++");
+
+            // int page = 1, itemsPerPage = 4, currentPage =(page -1)* itemsPerPage;
+            // var items = store.GetItems();
+            // var paginated = items
+            // .Select(i => i)
+            // .Skip(1)//starting item
+            // .Take(4);//items per page
+
+            // foreach (var item in paginated)
+            // {
+            //     System.Console.WriteLine(item.GetName() + '\n' + item.GetQuantity());
+            // }
         }
     }
 }
-
-
-// in store , there will be an array of _items, that contains Item object
-// _items = [Item, Item, Item]
-// _items = [{name: "laptop" , 20, default}, {name: "mac mini" , 20, "2024-03-24"}]
-// one of the staff they wanna add new item = {name: "laptop" , 24, default}
 
 

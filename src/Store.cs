@@ -7,85 +7,37 @@ class Store<T> where T : Item
 {
     private List<T> _items;
     private int _capacity;
-    //CAN ADD NAME.
-    public Store(int capacity)
+    private readonly string _name;
+    public Store(string name, int capacity)
     {
+        _name = name;
         _capacity = capacity;
-        _items = new List<T>();//_items=[];
+        _items = new List<T>();
+    }
+    public string GetName()
+    {
+        return _name;
     }
     public List<T> GetItems()
     {
         return _items;
     }
-    public void Display(List<T>? listItems = null)
+    public int GetCurrentVolume()
     {
-        if (listItems is null)
-        {
-            foreach (var item in _items)
-            {
-                Console.WriteLine('\n' + item.ToString() + '\n');
-            }
-        }
-        else
-        {
-            foreach (var item in listItems)
-            {
-                Console.WriteLine('\n' + item.ToString() + '\n');
-            }
-        }
+        return _items.Sum(item => item.GetQuantity());
     }
     public void AddItem(T newItem)
     {
         if (GetCurrentVolume() + newItem.GetQuantity() >= _capacity)
         {
-            Console.WriteLine("You reached the limit!.");
+            throw new Exception("You reached the limit!.");
         }
-        else
+        if (_items.Contains(newItem))
         {
-            if (!_items.Any(item => item.GetName() == newItem.GetName()))// if(!_items.Contains(newItem)){ } //* other way?
-            {
-                _items.Add(newItem);
-                Console.WriteLine($"Added:\n {newItem}");
-            }
-            else
-            {
-                Console.WriteLine($"You already have {newItem.GetName()}");
-            }
+            throw new Exception($"You already have {newItem.GetName()}");
         }
-    }
-    public List<T> SortByDate(SortOrder sort) //!CHECK
-    {
-        if (sort is SortOrder.DESC)
-        {
-            var descSort = from item in _items
-                           orderby item.GetDate() descending
-                           select item;
-            return descSort.ToList();
-        }
-        else
-        {
-            var ascSort = from item in _items
-                          orderby item.GetDate()
-                          select item;
-            return [.. ascSort];
-        }
-    }
-    public void GroupByDate()
-    {
-        var groupByMonth = (from item in _items
-                            let currentDate = DateTime.Now
-                            let category = (currentDate - item.GetDate()).TotalDays <= 90 ? "New Arrival" : "Old"
-                            group item by category into newGroup
-                            orderby newGroup.Key
-                            select newGroup);
-        foreach (var monthGroup in groupByMonth)
-        {
-            Console.WriteLine($"{monthGroup.Key} ( {monthGroup.Count()} ) : ");
-            foreach (var item in monthGroup)
-            {
-                Console.WriteLine($" - {item.GetName()},\n Created: {item.GetDate()}");
-            }
-        }
+        _items.Add(newItem);
+        Console.WriteLine($"Added:\n {newItem}");
     }
     public void Delete(T deletedItem)
     {
@@ -100,9 +52,10 @@ class Store<T> where T : Item
             Console.WriteLine($"{deletedItem.GetName()} is not found");
         }
     }
-    public int GetCurrentVolume()
+    public List<T> SortByNameAsc()
     {
-        return _items.Sum(item => item.GetQuantity());
+        var sorted = _items.OrderBy(item => item.GetName()).ToList();
+        return sorted;
     }
     public void FindItemByName(string itemName)
     {
@@ -116,18 +69,70 @@ class Store<T> where T : Item
             Console.WriteLine($"{itemName} Not Found");
         }
     }
-    public List<T> SortByNameAsc()
+    public List<T> SortByDate(SortOrder sort)
     {
-        return _items.OrderBy(item => item.GetName()).ToList();
+        if (sort is SortOrder.DESC)
+        {
+            var descSort = from item in _items
+                           orderby item.GetDate() descending
+                           select item;
+            return descSort.ToList();
+        }
+        else if (sort is SortOrder.ASC)
+        {
+            var ascSort = from item in _items
+                          orderby item.GetDate()
+                          select item;
+            return [.. ascSort];
+        }
+        else return _items;
     }
-
+    public void GroupByDate()
+    {
+        var groupByMonth = (from item in _items
+                            let currentDate = DateTime.Now
+                            let category = (currentDate - item.GetDate()).TotalDays <= 90 ? "New Arrival Items" : "Old Items"
+                            group item by category into newGroup
+                            orderby newGroup.Key
+                            select newGroup);
+        foreach (var monthGroup in groupByMonth)
+        {
+            Console.WriteLine($"{monthGroup.Key} ( {monthGroup.Count()} ) : ");
+            foreach (var item in monthGroup)
+            {
+                Console.WriteLine($" - {item.GetName()},\n Created: {item.GetDate()}\n");
+            }
+        }
+    }
+    public void Display(List<T>? listItems = null)
+    {
+        if (listItems is null)
+        {
+            foreach (var item in _items)
+            {
+                Console.WriteLine(item.ToString() + '\n');
+            }
+        }
+        else
+        {
+            foreach (var item in listItems)
+            {
+                Console.WriteLine(item.ToString() + '\n');
+            }
+        }
+    }
     public List<T> SortByName(SortOrder sort)
     {
         if (sort is SortOrder.DESC)
         {
-            return _items.OrderByDescending(item => item.GetName()).ToList();
+            var sorted = _items.OrderByDescending(item => item.GetName()).ToList();
+            return sorted;
         }
-        else return _items.OrderBy(item => item.GetName()).ToList();
+        else
+        {
+            var sorted = _items.OrderBy(item => item.GetName()).ToList();
+            return sorted;
+        }
     }
 }
 
